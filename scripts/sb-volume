@@ -1,0 +1,29 @@
+#!/usr/bin/sh
+
+# case $BUTTON in
+#     1) notify-send "🌐 Internet module" "Click to connect
+# 📡: no wifi connection
+# 📶: wifi connection with quality
+# ❎: no ethernet
+# 🌐: ethernet working
+# 🔒: vpn is active
+# " ;;
+# esac
+
+
+if [ "$(pamixer --get-mute)" = "true" ]; then
+    echo "婢"
+    exit
+fi
+
+vol=$(pamixer --get-volume)
+
+if [ "$vol" -gt 67 ]; then
+    icon="墳"
+elif [ "$vol" -gt 33 ]; then
+    icon="奔"
+else
+    icon="奄"
+fi
+
+echo "${icon} ${vol}%"

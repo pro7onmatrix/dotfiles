@@ -1,0 +1,19 @@
+#!/usr/bin/sh
+
+action=$(echo -e "Shutdown\nReboot\nLogout\nCancel" | dmenu -l 5 -c -bw 1 -i -p "Logout")
+
+if [[ -z "$action" || "$action" == "Cancel" ]]; then
+    exit
+fi
+
+confirm=$(echo -e "Yes\nNo" | dmenu -l 2 -c -bw 1 -i -p "${action} now?" | tr "[:lower:]" "[:upper:]")
+
+if [[ "$confirm" == "YES" ]]; then
+    case $action in
+        Shutdown)   sudo poweroff ;;
+        Reboot)     sudo reboot ;;
+        Logout)     xdotool key "super+shift+q" ;;
+        *)          ;;
+    esac
+fi
+
