@@ -1,0 +1,12 @@
+# User specific aliases and functions
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# some more ls aliases
+alias ll='ls -lhF'
+alias la='ls -lhAF'
+alias l='ls -CF'
+
+alias startvpn='sudo openvpn --cd /home/yannick/.keys/vpn --config /home/yannick/.keys/vpn/psi-UDP4-1194-yannick_lemke.ovpn --redirect-gateway def1 --auth-nocache --daemon'
+alias vim='nvim'
