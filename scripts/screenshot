@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+
+fname="$(date '+%Y%m%d-%H%M%S').png"
+
+import -window root "$HOME/Bilder/Screenshots/$fname"
+
+case $? in
+    0) notify-send "Screenshot" "Saved screenshot as $fname" ;;
+    *) notify-send "Screenshot" "Error saving screenshot" ;;
+esac

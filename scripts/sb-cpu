@@ -1,15 +1,3 @@
 #!/usr/bin/sh
 
-# Prevent the script from being run twice
-pidfile="/var/run/statusbar/sb-cpu.pid"
-trap "rm -f $pidfile" SIGSEGV
-trap "rm -f $pidfile" SIGINT
-
-if [ -f "$pidfile" ]; then
-    exit
-else
-    echo $$ > $pidfile
-fi
-
-top -bn2 -p 1 | grep 'Cpu(s)' | tail -1 | awk -F',' '{split($4, usage, /id/); printf("  %2.0f%%\n", 100 - usage[1])}' || echo "   0%"
-rm -f $pidfile
+sensors k10temp-pci-00c3 | awk '/Tdie/{ printf("%.0f\n", $2) }'

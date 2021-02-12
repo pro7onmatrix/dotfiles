@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-action=$(echo -e "Shutdown\nReboot\nLogout\nCancel" | dmenu -l 5 -c -bw 1 -i -p "Logout")
+action=$(echo -e "Shutdown\nReboot\nHibernate\nLogout\nCancel" | dmenu -l 6 -c -bw 1 -i -p "Logout")
 
 if [[ -z "$action" || "$action" == "Cancel" ]]; then
     exit
@@ -12,6 +12,7 @@ if [[ "$confirm" == "YES" ]]; then
     case $action in
         Shutdown)   sudo poweroff ;;
         Reboot)     sudo reboot ;;
+        Hibernate)  sudo systemctl hibernate ;;
         Logout)     xdotool key "super+shift+q" ;;
         *)          ;;
     esac

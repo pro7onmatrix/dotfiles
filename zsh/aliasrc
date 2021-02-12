@@ -4,9 +4,22 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # some more ls aliases
+alias ls='ls --color=auto'
 alias ll='ls -lhF'
 alias la='ls -lhAF'
 alias l='ls -CF'
 
-alias startvpn='sudo openvpn --cd /home/yannick/.keys/vpn --config /home/yannick/.keys/vpn/psi-UDP4-1194-yannick_lemke.ovpn --redirect-gateway def1 --auth-nocache --daemon'
+alias grep='grep --color=auto'
 alias vim='nvim'
+
+alias gs='git status'
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias gp='git push'
+alias gco='git checkout'
+
+# just to be sure...
+alias ghostscript='/usr/bin/gs'
+
+alias startvpn='sudo openvpn --cd /home/yannick/.config/openvpn/psi-UDP4-1194-yannick_lemke --config psi-UDP4-1194-yannick_lemke.ovpn --daemon akochsenfeld'

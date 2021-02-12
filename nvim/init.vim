@@ -39,6 +39,10 @@ autocmd colorscheme * hi Normal guibg=NONE ctermbg=NONE
 
 " let g:airline_theme='gruvbox'
 " let g:airline_theme='gruvbox_material'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.maxlinenr=''
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
 
@@ -87,6 +91,9 @@ nmap <leader>gi <Plug>(coc-implemetation)
 nmap <leader>gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
 inoremap <silent><expr> <TAB>
     \ pumvisible() ? coc#_select_confirm() :
     \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
@@ -108,6 +115,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 let g:coc_global_extensions = [
     \ 'coc-clangd',
+    \ 'coc-cmake',
     \ 'coc-eslint',
     \ 'coc-json',
     \ 'coc-python',

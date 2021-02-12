@@ -30,36 +30,38 @@ bindkey '^?' backward-delete-char
 #   - line for insert mode
 #   - block for command mode
 zle-keymap-select () {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
+    if [[ ${KEYMAP} == vicmd ]] ||
+       [[ $1 = 'block' ]]; then
+        printf '\e[1 q'
+    elif [[ ${KEYMAP} == main ]] ||
+         [[ ${KEYMAP} == viins ]] ||
+         [[ ${KEYMAP} = '' ]] ||
+         [[ $1 = 'beam' ]]; then
+        printf '\e[5 q'
+    fi
 }
 zle -N zle-keymap-select
-zle-line-init () {
-    zle -K viins
-    echo -ne '\e[5 q'
-}
 zle -N zle-keymap-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup
-preexec() { echo -ne '\e[5 q'; } # Use beam shape cursor for each new prompt
 precmd() {
     promptcmd
-    echo -ne "\e]0;${PWD/#$HOME/~}\a"
+    chpwd
     vcs_info
 }
+
+# Set title to PWD and substitute $HOME with ~
 chpwd() {
-    echo -ne "\e]0;${PWD/#$HOME/~}\a"
+    printf "\e]2;${PWD/#$HOME/~} - $TERMINAL\a"
 }
 
 promptcmd() {
     local exitstatus="$?"
-    PROMPT='%B%{$fg[blue]%}%~ %{$fg[red]%}${vcs_info_msg_0_}'
+    local ttyname=$(tty)
+
+    if [[ "$ttyname" =~ "/dev/tty" ]]; then
+        PROMPT='%B%{$fg[blue]%}%~ '
+    else
+        PROMPT='%B%{$fg[blue]%}%~ %{$fg[red]%}${vcs_info_msg_0_}'
+    fi
 
     if [[ "$exitstatus" == 0 ]]; then
         PROMPT+='%{$fg[green]%}'
@@ -67,7 +69,11 @@ promptcmd() {
         PROMPT+='%{$fg[red]%}'
     fi
 
-    PROMPT+='%{$reset_color%}%b '
+    if [[ "$ttyname" =~ "/dev/tty" ]]; then
+        PROMPT+='%#%{$reset_color%}%b '
+    else
+        PROMPT+='%{$reset_color%}%b '
+    fi
 }
 
 setopt PROMPT_SUBST
@@ -114,13 +120,27 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
-[[ -f "$HOME/.config/aliasrc" ]] && source "$HOME/.config/aliasrc"
+if [[ -f "$HOME/.config/aliasrc" ]]; then
+    source "$HOME/.config/aliasrc"
+fi
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
 
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 # FermiONs++ source
-[[ -f "$HOME/fermions/.qcsrc_local" ]] && source "$HOME/fermions/.qcsrc_local" >/dev/null
+if [[ -f "$HOME/fermions/.qcsrc_local" ]] ;then
+    source "$HOME/fermions/.qcsrc_local" >/dev/null
+fi
 
+if [[ -f "$HOME/.config/lf/lf-icons" ]]; then
+    source "$HOME/.config/lf/lf-icons"
+fi
+
+export QT_STYLE_OVERRIDE=kvantum
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"

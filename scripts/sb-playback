@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Check if any players are running
+status="$(playerctl status 2>/dev/null)"
+if [[ "$?" != 0 || "$status" == "Stopped" ]]; then
+    echo " "
+    exit 0
+fi
+if [[ "$status" == "Playing" ]]; then
+    icon="契"
+elif [[ "$status" == "Paused" ]]; then
+    icon=""
+else
+    icon=""
+fi
+
+# For Spotify, the 'position' field doesn't work,
+# and 'mpris' is in microseconds, skip for now
+if [[ "$(playerctl metadata -f '{{ playerName }}')" == "spotify" ]]; then
+    printf " %s %s | \n" "$icon" "$(playerctl metadata -f '{{ artist }} - {{ title }}')"
+else
+    printf " %s %s | \n" "$icon" "$(playerctl metadata -f '{{ artist }} - {{ title }} ({{ duration(position) }}/{{ duration(mpris:length) }})')"
+fi
+

@@ -1,16 +1,16 @@
 [global]
     monitor = 0
     follow = none
-    geometry = "0x0-0+24"
+    geometry = "320x100-0+24"
     indicate_hidden = yes
-    shrink = no
-    transparency = 0
+    shrink = yes
+    transparency = 20
     notification_height = 0
     separator_height = 2
     padding = 8
     horizontal_padding = 8
     frame_width = 3
-    frame_color = "#005577"
+    frame_color = "#8fbcbb"
 
     # Define a color for the separator.
     # possible values are:
@@ -24,7 +24,7 @@
     sort = yes
 
     idle_threshold = 120
-    font = FiraMono Nerd Font 12
+    font = FiraCode Nerd Font 12
     line_height = 0
     markup = full
 
@@ -52,7 +52,7 @@
     max_icon_size = 32
     sticky_history = yes
     history_length = 20
-    dmenu = /usr/bin/d/firmenu -p dunst:
+    dmenu = /usr/bin/dmenu -p dunst:
     browser = /usr/bin/firefox -new-tab
 
     # Always run rule-defined scripts, even if the notification is suppressed
@@ -68,27 +68,21 @@
 [experimental]
     per_monitor_dpi = false
 
-[shortcuts]
-    close = ctrl+space
-    close_all = ctrl+shift+space
-    history = ctrl+grave
-    context = ctrl+shift+period
-
 [urgency_low]
-    background = "#2e3340"
-    foreground = "#d8dee9"
+    background = "#8fbcbb"
+    foreground = "#2e3440"
     timeout = 5
     icon = /home/yannick/.config/dunst/info.png
 
 [urgency_normal]
-    background = "#2e3440"
-    foreground = "#d8dee9"
+    background = "#8fbcbb"
+    foreground = "#2e3440"
     timeout = 5
     icon = /home/yannick/.config/dunst/normal.png
 
 [urgency_critical]
     background = "#bf616a"
     foreground = "#eceff4"
-    frame_color = "#ebcb8b"
+    frame_color = "#bf616a"
     timeout = 0
     icon = /home/yannick/.config/dunst/critical.png
