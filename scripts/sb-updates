@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Check updates with the dnf package manager in Fedora
+dnf makecache 2>/dev/null 1>&2
+numupdates=$(($(dnf check-update | wc -l) - 1))
+
+printf "  %d\n" $numupdates
+

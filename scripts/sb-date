@@ -1,12 +1,15 @@
 #!/usr/bin/sh
 
 case $BUTTON in
-    1|3)
+    1)
         today=$(date '+%e' | sed 's/^\s*//')
         month=$(cal | head -1)
         days=$(cal | tail -n +2 | sed "0,/$today/{s|$today|<b>$today</b>|}")
         notify-send -u low "$month" "$days"
         ;;
+    3)
+        st -e calcurse & disown
+        ;;
 esac
 
-date '+%a %b %d %H:%M'
+date '+%a, %b %d %R'

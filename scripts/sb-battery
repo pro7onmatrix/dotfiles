@@ -3,24 +3,29 @@
 battery_info=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)
 state=$(echo "$battery_info" | grep "state" | awk '{print $2}')
 perc=$(echo "$battery_info" | grep "percentage" | awk '{print $2}' | sed "s/%//")
-remtime=$(echo "$battery_info" | grep "time to" | awk '{ if ($5 == "hours") printf("%.0f:%02.0f %s", $4, ($4%1) * 60, $5); else printf("%.0f %s", $4, $5); }')
+remtime=$(echo "$battery_info" | grep "time to" | awk '{ sub(/,/, ".", $4); if ($5 == "hours") printf("%.0f:%02.0f %s", $4, ($4-int($4)) * 60, $5); else printf("%.0f %s", $4, $5); }')
+
+# Just in case something goes wrong
+if [ -z "$remtime" ]; then
+    remtime="N/A"
+fi
 
 if [ "$perc" -gt 87 ]; then
-    echo -n " "
+    icon=" "
 elif [ "$perc" -gt 63 ]; then
-    echo -n " "
+    icon=" "
 elif [ "$perc" -gt 38 ]; then
-    echo -n " "
+    icon=" "
 elif [ "$perc" -gt 13 ]; then
-    echo -n " "
+    icon=" "
 else
-    echo -n " "
+    icon=" "
 fi
 
 if [ "$state" = "charging" ] || [ "$state" = "fully-charged" ]; then
-    echo -n " "
+    icon+=" "
 fi
-echo " ${perc}%"
+printf "%s  %2d%%\n" $icon $perc
 
 case $BUTTON in
     1|3)

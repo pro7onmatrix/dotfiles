@@ -1,0 +1,20 @@
+#!/bin/bash
+
+layout=$(setxkbmap -query | grep layout | sed -r "s/^.*\s+([A-Za-z]+)_?.*$/\1/")
+
+case $BUTTON in
+    1|2|3)
+        case $layout in
+            de)
+                setxkbmap en_US
+                layout="en"
+                ;;
+            en)
+                setxkbmap de
+                layout="de"
+                ;;
+        esac
+        ;;
+esac
+
+printf "%s\n" $layout
