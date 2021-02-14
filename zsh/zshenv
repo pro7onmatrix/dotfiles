@@ -1,0 +1,34 @@
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+# Extend path
+if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
+    export PATH="$PATH:$HOME/.local/bin"
+fi
+
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+export BROWSER="firefox"
+
+# Environment for XDG Base Specification
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GOPATH="$XDG_DATA_HOME/go"
+export GRIPHOME="$XDG_CACHE_HOME/grip"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export HISTFILE="$XDG_DATA_HOME/zsh/history"
+export LESSHISTFILE="-"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export NVM_DIR="$XDG_DATA_HOME/nvm"
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+export PYLINTHOME="$XDG_CACHE_HOME/pylint"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+export STACK_ROOT="$XDG_DATA_HOME/stack"
+export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+

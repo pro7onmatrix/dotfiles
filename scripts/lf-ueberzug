@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+if [ -n "$DISPLAY" ]; then
+    # if TMPDIR is set, use it, otherwise use /tmp
+    export FIFO_UEBERZUG="${TMPDIR:-/tmp}/lf-ueberzug-$$"
+
+    cleanup() {
+        exec 3>&-
+        rm "$FIFO_UEBERZUG"
+    }
+
+    mkfifo "$FIFO_UEBERZUG"
+    ueberzug layer -s < "$FIFO_UEBERZUG" &
+    exec 3>"$FIFO_UEBERZUG"
+    trap cleanup EXIT
+
+    if ! [ -d "$XDG_CACHE_HOME/lf" ]; then
+        mkdir -p "$XDG_CACHE_HOME/lf"
+    fi
+
+    lf "$@" 3>&-
+else
+    exec lf "$@"
+fi

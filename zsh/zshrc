@@ -1,3 +1,5 @@
+neofetch
+
 # Color of prompt
 autoload -U colors && colors
 
@@ -50,7 +52,8 @@ precmd() {
 
 # Set title to PWD and substitute $HOME with ~
 chpwd() {
-    printf "\e]2;${PWD/#$HOME/~} - $TERMINAL\a"
+    local termname=$(sed "s/\0//g" /proc/$(xdotool getwindowpid $(xdotool getactivewindow))/cmdline)
+    printf "\e]2;${PWD/#$HOME/~} - $termname\a"
 }
 
 promptcmd() {
@@ -140,7 +143,3 @@ fi
 
 export QT_STYLE_OVERRIDE=kvantum
 
-# XDG Base Directory Specification
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"

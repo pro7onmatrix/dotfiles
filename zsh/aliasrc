@@ -19,6 +19,8 @@ alias gc='git commit'
 alias gp='git push'
 alias gco='git checkout'
 
+alias lf="lf-ueberzug"
+
 # just to be sure...
 alias ghostscript='/usr/bin/gs'
 

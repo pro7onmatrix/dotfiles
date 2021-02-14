@@ -1,0 +1,26 @@
+set icons
+set drawbox
+
+cmd on-cd &{{
+    printf "\033]0; $(pwd | sed "s#$HOME#~#")\007" > /dev/tty
+}}
+
+cmd open ${{
+    case $(file --mime-type $f -b) in
+        text/*|application/json)
+            $EDITOR "$fx"
+            ;;
+        *)
+            for f in "$fx"; do
+                xdg-open "$f" 2>/dev/null 1>&2 &
+            done
+            ;;
+    esac
+}}
+
+on-cd
+
+map D delete
+
+set previewer ~/.config/lf/lf_preview.sh
+set cleaner ~/.config/lf/clear_img.sh
