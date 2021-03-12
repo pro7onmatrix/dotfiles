@@ -1,15 +1,9 @@
 #!/usr/bin/sh
 
-# case $BUTTON in
-#     1) notify-send "🌐 Internet module" "Click to connect
-# 📡: no wifi connection
-# 📶: wifi connection with quality
-# ❎: no ethernet
-# 🌐: ethernet working
-# 🔒: vpn is active
-# " ;;
-# esac
-
+case $BUTTON in
+    1) pamixer -t && pkill -RTMIN+12 dwmblocks ;;
+    3) pavucontrol & disown
+esac
 
 if [ "$(pamixer --get-mute)" = "true" ]; then
     echo "婢"
@@ -27,3 +21,4 @@ else
 fi
 
 echo "${icon} ${vol}%"
+

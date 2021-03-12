@@ -79,7 +79,7 @@ autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
     \ |   exe "normal! g`\""
     \ | endif
-autocmd BufWritePre *.{py,tex,cpp,c,hpp,h,js,html,css,ts,vim,txt,bib} call DeleteTrailingWhitespace()
+autocmd BufWritePre * call DeleteTrailingWhitespace()
 
 let mapleader=','
 nnoremap <leader><space> :nohlsearch<cr>
@@ -121,5 +121,6 @@ let g:coc_global_extensions = [
     \ 'coc-python',
     \ 'coc-texlab',
     \ 'coc-tsserver',
+    \ 'coc-rls',
     \ 'coc-snippets'
     \]

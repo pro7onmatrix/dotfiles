@@ -1,8 +1,27 @@
 #!/bin/bash
 
-# Check updates with the dnf package manager in Fedora
-dnf makecache 2>/dev/null 1>&2
-numupdates=$(($(dnf check-update | wc -l) - 1))
+# Check updates with the pacman package manager in ArchLinux
+updates="$(checkupdates | awk '{print $1}')"
+numupdates="$(printf "%s" "$updates" | wc -l)"
 
-printf "  %d\n" $numupdates
+# Count the last linebreak only if the output isn't empty
+if [[ "$numupdates" != 0 ]]; then
+    numupdates="$(($numupdates + 1))"
+fi
+
+printf " %d" $numupdates
+
+case $BUTTON in
+    1)
+        msg="$(printf "%s" "$updates" | head)"
+        if [[ "$numupdates" -gt 10 ]]; then
+            msg+="\nand $(($numupdates - 10)) more"
+        fi
+        msg+="\nRight-click to open terminal"
+        notify-send --urgency=low "$numupdates updates available" "$msg"
+        ;;
+    3)
+        st -e zsh -c "sudo pacman -Syu; exec zsh"
+        ;;
+esac
 

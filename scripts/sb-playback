@@ -1,11 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check if any players are running
 status="$(playerctl status 2>/dev/null)"
 if [[ "$?" != 0 || "$status" == "Stopped" ]]; then
-    echo " "
+    echo " "
+
+    case $BUTTON in
+        1|3) deadbeef & disown ;;
+    esac
+
     exit 0
 fi
+
 if [[ "$status" == "Playing" ]]; then
     icon="契"
 elif [[ "$status" == "Paused" ]]; then
@@ -14,11 +20,10 @@ else
     icon=""
 fi
 
-# For Spotify, the 'position' field doesn't work,
-# and 'mpris' is in microseconds, skip for now
+# For Spotify, the 'position' field doesn't work
 if [[ "$(playerctl metadata -f '{{ playerName }}')" == "spotify" ]]; then
-    printf " %s %s | \n" "$icon" "$(playerctl metadata -f '{{ artist }} - {{ title }}')"
+    printf " %s %s" "$icon" "$(playerctl metadata -f '{{ artist }} - {{ title }}')"
 else
-    printf " %s %s | \n" "$icon" "$(playerctl metadata -f '{{ artist }} - {{ title }} ({{ duration(position) }}/{{ duration(mpris:length) }})')"
+    printf " %s %s" "$icon" "$(playerctl metadata -f '{{ artist }} - {{ title }} ({{ duration(position) }}/{{ duration(mpris:length) }})')"
 fi
 

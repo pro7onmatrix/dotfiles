@@ -1,11 +1,6 @@
 # Color of prompt
 autoload -U colors && colors
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git fossil
-zstyle ':vcs_info:*' formats ' %b '
-
-HISTFILE=~/.cache/zsh/zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
 
@@ -43,42 +38,15 @@ zle-keymap-select () {
 zle -N zle-keymap-select
 zle -N zle-keymap-init
 precmd() {
-    promptcmd
+    # promptcmd
     chpwd
-    vcs_info
+    # vcs_info
 }
 
 # Set title to PWD and substitute $HOME with ~
 chpwd() {
-    local termname=$(sed "s/\0//g" /proc/$(xdotool getwindowpid $(xdotool getactivewindow))/cmdline)
-    printf "\e]2;${PWD/#$HOME/~} - $termname\a"
+    printf "\e]2;${PWD/#$HOME/~} - $TERMINAL\a"
 }
-
-promptcmd() {
-    local exitstatus="$?"
-    local ttyname=$(tty)
-
-    if [[ "$ttyname" =~ "/dev/tty" ]]; then
-        PROMPT='%B%{$fg[blue]%}%~ '
-    else
-        PROMPT='%B%{$fg[blue]%}%~ %{$fg[red]%}${vcs_info_msg_0_}'
-    fi
-
-    if [[ "$exitstatus" == 0 ]]; then
-        PROMPT+='%{$fg[green]%}'
-    else
-        PROMPT+='%{$fg[red]%}'
-    fi
-
-    if [[ "$ttyname" =~ "/dev/tty" ]]; then
-        PROMPT+='%#%{$reset_color%}%b '
-    else
-        PROMPT+='%{$reset_color%}%b '
-    fi
-}
-
-setopt PROMPT_SUBST
-# export PROMPT='%B%{$fg[blue]%}%~ %{$fg[red]%}${vcs_info_msg_0_}%{$fg[green]%}%{$reset_color%}%b '
 
 # create a zkbd compatible hash;
 # to add other keys to this hash, see: man 5 terminfo
@@ -141,3 +109,5 @@ fi
 
 export QT_STYLE_OVERRIDE=kvantum
 
+# Start starship prompt
+eval "$(starship init zsh)"

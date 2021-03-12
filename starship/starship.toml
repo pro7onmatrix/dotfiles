@@ -1,0 +1,43 @@
+# No newline before prompt
+add_newline = false
+
+# Do not break prompt into two lines
+[line_break]
+disabled = true
+
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+vicmd_symbol = "[](bold yellow)"
+
+[directory]
+style = "bold blue"
+read_only = " 🔒"
+truncation_length = 2
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+style = "bold red"
+
+# Disable modules
+[cmake]
+disabled = true
+
+[python]
+disabled = true
+
+[lua]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[rust]
+disabled = true
+
+[package]
+disabled = true
+
+[cmd_duration]
+disabled = true

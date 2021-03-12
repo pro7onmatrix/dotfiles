@@ -4,9 +4,6 @@
 setxkbmap de &
 numlockx &
 
-# Lighting control
-openrgb --profile cyan.orp &
-
 # Wallpaper
 nitrogen --restore &
 
@@ -17,7 +14,13 @@ picom --config $HOME/.config/picom/picom.conf --experimental-backends &
 dunst &
 
 # Status bar
-exec slstatus &
+dwmblocks &
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
+# Set resolution and refresh rate
+xrandr --output DisplayPort-1 --mode 1920x1080 --rate 144
 
 # And last but not least, the window manager
 exec dwm

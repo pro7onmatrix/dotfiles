@@ -10,9 +10,9 @@ confirm=$(echo -e "Yes\nNo" | dmenu -l 2 -c -bw 1 -i -p "${action} now?" | tr "[
 
 if [[ "$confirm" == "YES" ]]; then
     case $action in
-        Shutdown)   sudo poweroff ;;
-        Reboot)     sudo reboot ;;
-        Hibernate)  sudo systemctl hibernate ;;
+        Shutdown)   systemctl poweroff ;;
+        Reboot)     systemctl reboot ;;
+        Hibernate)  systemctl hibernate ;;
         Logout)     xdotool key "super+shift+q" ;;
         *)          ;;
     esac
