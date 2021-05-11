@@ -14,6 +14,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
 call plug#end()
 
 set termguicolors
@@ -118,7 +120,7 @@ let g:coc_global_extensions = [
     \ 'coc-cmake',
     \ 'coc-eslint',
     \ 'coc-json',
-    \ 'coc-python',
+    \ 'coc-pyright',
     \ 'coc-texlab',
     \ 'coc-tsserver',
     \ 'coc-snippets'
